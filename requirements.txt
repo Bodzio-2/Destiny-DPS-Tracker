@@ -3,3 +3,4 @@ pyautogui
 pytesseract
 time
 numpy
+packaging

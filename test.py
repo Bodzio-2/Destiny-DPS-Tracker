@@ -11,8 +11,11 @@ start_y = pyautogui.size()[1]/5
 size_x = (pyautogui.size()[0]/4) * 2
 size_y = (pyautogui.size()[1]/5) * 3
 
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-while (True):
+file = open("parsedText.txt", "w+")
+
+while (i != 10):
 
     image = pyautogui.screenshot(region=(start_x, start_y, size_x, size_y))
 
@@ -37,11 +40,7 @@ while (True):
                                            cv2.CHAIN_APPROX_NONE)
 
     im2 = res.copy()
-
-    file = open("parsedText.txt", "w+")
-    file.write("")
-    file.close()
-
+    j = 0
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
 
@@ -49,21 +48,20 @@ while (True):
 
         cropped = im2[y:y + h, x: x+w]
 
-        file = open("parsedText.txt", "a")
-
-        # Here replace with Tesseract-OCR path
-        pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
         text = pytesseract.image_to_string(cropped)
         print(text)
-        cv2.imwrite("./processed/im" + str(i) + ".png", cropped)
+        cv2.imwrite("images/processed/" + str(i) +
+                    "_" + str(j) + ".png", cropped)
 
         file.write(text)
         file.write("\n")
-        file.close()
+        j += 1
 
-    # cv2.imwrite("./gray/image" + str(i) + ".png", res)
-    # cv2.imwrite("./dilation/im" + str(i) + ".png", dilation)
-    # cv2.imwrite("./contours/im" + str(i) + ".png", blurred)
+    cv2.imwrite("images/gray/" + str(i) + ".png", res)
+    cv2.imwrite("images/dilation/" + str(i) + ".png", dilation)
+    cv2.imwrite("images/contours/" + str(i) + ".png", blurred)
+
     i += 1
+
     time.sleep(1)
+file.close()
