@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Create Virtual Environment",
+      "type": "shell",
+      "command": "conda create --name DestinyDPS_Tracker"
+    },
+    {
+      "label": "Open Virtual Environment",
+      "type": "shell",
+      "command": "conda activate DestinyDPS_Tracker"
+    }
+  ]
+}

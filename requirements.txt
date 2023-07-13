@@ -1,0 +1,5 @@
+opencv-python
+pyautogui
+pytesseract
+time
+numpy
