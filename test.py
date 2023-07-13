@@ -4,6 +4,7 @@ import time
 import pyautogui
 import pytesseract
 
+save_img = True
 i=0
 start_x = pyautogui.size()[0]/4
 start_y = pyautogui.size()[1]/5
@@ -12,20 +13,9 @@ size_x = (pyautogui.size()[0]/4) * 2
 size_y = (pyautogui.size()[1]/5) * 3
 
 
-
-while(True):
-
-
-
-    image = pyautogui.screenshot(region=(start_x, start_y, size_x, size_y))
-
-    image = cv2.cvtColor(np.array(image),
-                         cv2.COLOR_RGB2BGR)
-
-    
-    
+def numberRecognition(image, low_bound, high_bound):
     blurred = cv2.GaussianBlur(image, (5, 5), 1)
-    mask = cv2.inRange(blurred,(0,180,200),(20,240,255))
+    mask = cv2.inRange(blurred, low_bound, high_bound)
     res = 255 - mask
 
 
@@ -60,11 +50,28 @@ while(True):
 
         text = pytesseract.image_to_string(cropped)
         print(text)
-        cv2.imwrite("./processed/im" + str(i) + ".png", cropped)
+        if(save_img):
+            cv2.imwrite("./processed/im" + str(i) + ".png", cropped)
 
         file.write(text)
         file.write("\n")
         file.close()
+
+
+
+
+while(True):
+
+
+
+    image = pyautogui.screenshot(region=(start_x, start_y, size_x, size_y))
+
+    image = cv2.cvtColor(np.array(image),
+                         cv2.COLOR_RGB2BGR)
+    
+    numberRecognition(image, (0,180,200), (20,240,255)) #dps number recognition for yellow number
+    #numberRecognition(image, (200, 200, 200), (255, 255, 255)) #dps number recognition for white number
+
 
     #cv2.imwrite("./gray/image" + str(i) + ".png", res)
     #cv2.imwrite("./dilation/im" + str(i) + ".png", dilation)
