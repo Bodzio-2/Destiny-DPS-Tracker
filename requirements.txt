@@ -1,6 +1,5 @@
-opencv-python
-pyautogui
-pytesseract
-time
-numpy
-packaging
+opencv-python==4.8.0.74
+PyAutoGUI==0.9.54
+pytesseract==0.3.10
+numpy==1.23.4
+packaging==23.0
