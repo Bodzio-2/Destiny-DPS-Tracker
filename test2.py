@@ -18,7 +18,13 @@ cv2.imshow("hsv", hsv)
 cv2.waitKey(0)
 
 # Get binary-mask
-msk = cv2.inRange(hsv, np.array([20, 150, 175]), np.array([30, 255, 255]))
+
+# Yellow numbers
+# msk = cv2.inRange(hsv, np.array([20, 150, 175]), np.array([30, 255, 255]))
+
+# White numbers
+msk = cv2.inRange(hsv, np.array([0, 0, 230]), np.array([30, 50, 255]))
+
 krn = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
 dlt = cv2.dilate(msk, krn, iterations=1)
 thr = 255 - cv2.bitwise_and(dlt, msk)
